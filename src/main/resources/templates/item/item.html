@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout01}">
+<div layout:fragment="content">
+<h1>상품 리스트 출력 예제</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <td>#</td>
+        <td>상품명</td>
+        <td>상품설명</td>
+        <td>가격</td>
+        <td>상품등록일</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td th:text="${itemDTO.itemName}"></td>
+        <td th:text="${itemDTO.itemDetail}"></td>
+        <td th:text="${itemDTO.price}"></td>
+        <td th:text="${itemDTO.regTime}"></td>
+        <td></td>
+    </tr>
+    </tbody>
+
+</table>
+</div>
+</html>
