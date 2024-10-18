@@ -1,6 +1,8 @@
 package com.shop.jsshop.entity;
 
 import com.shop.jsshop.constant.ItemSellStatus;
+import com.shop.jsshop.dto.ItemFormDTO;
+import com.shop.jsshop.exception.OutOfStockException;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -30,5 +32,25 @@ public class Item extends BaseEntity{
 
     @Enumerated(EnumType.STRING)
     private ItemSellStatus itemSellStatus; //상품판매상태 - enum
+
+    //item 정보 변경 메서드
+    public void updateItem(ItemFormDTO itemFormDTO){
+        this.itemName=itemFormDTO.getItemName();
+        this.price = itemFormDTO.getPrice();
+        this.stockNumber = itemFormDTO.getStockNumber();
+        this.itemDetail=itemFormDTO.getItemDetail();
+        this.itemSellStatus=itemFormDTO.getItemSellStatus();
+
+    }
+
+    //재고관리 메서드 - 사용자정의 예외(OutofStockException) 사용(p.297)
+    public void removeStock(int stockNumber){
+        int restStock = this.stockNumber - stockNumber; //주문 후 남은 수량
+        if (restStock<0){ //??0포함해야 하는 것 아님?
+            throw new OutOfStockException("상품의 재고가 부족합니다.(현재 재고수량: "+this.stockNumber+")");
+        }
+        this.stockNumber = restStock;
+    }
+
 
 }

@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item> { //Item 관리용 CRUD
+public interface ItemRepository extends JpaRepository<Item, Long>, QuerydslPredicateExecutor<Item>, ItemRepositoryCustom { //Item 관리용 CRUD
     //상속 2가지 : JpaRepository, Querydsl  QuerydslPredicateExecutor<ItemEnt>
 
     //C , U : save()
