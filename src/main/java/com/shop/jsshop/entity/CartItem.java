@@ -26,6 +26,24 @@ public class CartItem extends BaseEntity{ //장바구니 상품들
     private Item item;
 
     private int count; //장바구니 담을 개수(상품당)
+
+    //메소드(p.331)
+    public static CartItem createCartItem(Cart cart, Item item, int count){
+        CartItem cartItem = new CartItem();
+        cartItem.setCart(cart);
+        cartItem.setItem(item);
+        cartItem.setCount(count);
+        return cartItem;
+    }
+
+    public void addCount(int count){
+        this.count += count;
+    }
+
+    //수량변경(p.351)
+    public void updateCount(int count){
+        this.count = count;
+    }
 }
 
 //Hibernate:

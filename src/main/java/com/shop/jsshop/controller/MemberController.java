@@ -33,7 +33,7 @@ public class MemberController {
         }
 
         try {
-            Member member = new Member().createMember(memberFormDTO, passwordEncoder);
+            Member member = new Member().createMember(memberFormDTO, passwordEncoder); //ROLE_USER
             memberService.saveMember(member);
         }catch (IllegalStateException e){
             model.addAttribute("errorMessage", e.getMessage());
@@ -48,34 +48,6 @@ public class MemberController {
         return "member/memberLoginForm";
     }
 
-    //post - login시 >SecurityConfig로 작동
-//    Hibernate:
-//    select
-//    m1_0.member_id,
-//    m1_0.address,
-//    m1_0.email,
-//    m1_0.name,
-//    m1_0.password,
-//    m1_0.role
-//            from
-//    member m1_0
-//    where
-//    m1_0.email=?
-//    Hibernate:
-//    select
-//    m1_0.member_id,
-//    m1_0.address,
-//    m1_0.email,
-//    m1_0.name,
-//    m1_0.password,
-//    m1_0.role
-//            from
-//    member m1_0
-//    where
-//    m1_0.email=?
-
-
-
     @GetMapping(value = "/login/error")
     public String loginError(Model model){
         model.addAttribute("loginErrorMsg","아이디 또는 비밀번호를 확인해 주세요.");
@@ -83,3 +55,29 @@ public class MemberController {
     }
 
 }
+
+//post - login시 >SecurityConfig로 작동
+//    Hibernate:
+//    select
+//    m1_0.member_id,
+//    m1_0.address,
+//    m1_0.email,
+//    m1_0.name,
+//    m1_0.password,
+//    m1_0.role
+//            from
+//    member m1_0
+//    where
+//    m1_0.email=?
+//    Hibernate:
+//    select
+//    m1_0.member_id,
+//    m1_0.address,
+//    m1_0.email,
+//    m1_0.name,
+//    m1_0.password,
+//    m1_0.role
+//            from
+//    member m1_0
+//    where
+//    m1_0.email=?

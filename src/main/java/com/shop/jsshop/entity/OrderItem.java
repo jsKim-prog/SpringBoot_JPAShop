@@ -22,10 +22,28 @@ public class OrderItem extends BaseEntity{ //주문상품
     @ManyToOne(fetch = FetchType.LAZY) //다대일(하나의 주문<-여러 주문상품)
     @JoinColumn(name = "order_id")
     private Order order;
-
-    private int orderPrice; //주문가격
-
+    private int orderPrice; //주문가격=상품가격
     private int count; //수량
+    
+    //메서드 : 주문생성(p.297)
+    public static OrderItem createOderItem(Item item, int count){
+        OrderItem orderItem = new OrderItem();
+        orderItem.setItem(item);
+        orderItem.setCount(count);
+        orderItem.setOrderPrice(item.getPrice());
+        item.removeStock(count);
+        return orderItem;
+    }
+    
+    //총 주문가격
+    public int getTotalPrice(){
+        return orderPrice*count;
+    }
+
+    //주문취소
+    public void cancel(){
+        this.getItem().addStock(count);
+    }
 
 
 }

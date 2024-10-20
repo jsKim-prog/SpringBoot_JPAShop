@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
       xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
-      layout:decorate="~{layouts/layout01}">
+      layout:decorate="~{layouts/layout1}">
 <head>
   <meta name="_csrf" th:content="${_csrf.token}"/>
   <meta name="_csrf_header" th:content="${_csrf.headerName}"/>
@@ -37,26 +37,28 @@
       };
 
       var param = JSON.stringify(paramData);
+      console.log(param);
 
       $.ajax({
-        url      : url,
-        type     : "POST",
-        contentType : "application/json",
-        data     : param,
+        url: url,
+        type: "POST",
+        contentType: "application/json",
+        data : param,
         beforeSend : function(xhr){
           /* 데이터를 전송하기 전에 헤더에 csrf값을 설정 */
           xhr.setRequestHeader(header, token);
         },
-        dataType : "json",
-        cache   : false,
-        success  : function(result, status){
+        dataType: "json",
+        cache: false,
+        success: function(result, status){
+          console.log(result);
           alert("주문이 완료 되었습니다.");
           location.href='/';
         },
-        error : function(jqXHR, status, error){
-
-          if(jqXHR.status == '401'){
-            alert('로그인 후 이용해주세요');
+        error : function(jqXHR, status, error){ //미로그인시 시큐리티에서 로그인페이지로 보냄(컨트롤러X)
+          console.log(jqXHR.status);
+          if(jqXHR.status === 200){ //**js수정
+           alert('로그인 후 이용해주세요');
             location.href='/members/login';
           } else{
             alert(jqXHR.responseText);
@@ -95,7 +97,7 @@
         },
         error : function(jqXHR, status, error){
 
-          if(jqXHR.status == '401'){
+          if(jqXHR.status === 200){
             alert('로그인 후 이용해주세요');
             location.href='/members/login';
           } else{
@@ -146,10 +148,10 @@
       <img th:src="${item.itemImgDTOList[0].imgUrl}" class = "rounded repImg" th:alt="${item.itemName}">
     </div>
     <div class="wd50">
-            <span th:if="${item.itemSellStatus == T(com.shop.jsshop.constant.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
+            <span th:if="${item.itemSellStatus eq T(com.shop.jsshop.constant.ItemSellStatus).SELL}" class="badge badge-primary mgb-15">
                 판매중
             </span>
-      <span th:unless="${item.itemSellStatus == T(com.shop.jsshop.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15" >
+      <span th:unless="${item.itemSellStatus eq T(com.shop.jsshop.constant.ItemSellStatus).SELL}" class="badge btn-danger mgb-15" >
                 품절
             </span>
       <div class="h4" th:text="${item.itemName}"></div>
@@ -173,11 +175,11 @@
         <h5>결제 금액</h5>
         <h3 name="totalPrice" id="totalPrice" class="font-weight-bold"></h3>
       </div>
-      <div th:if="${item.itemSellStatus == T(com.shop.jsshop.constant.ItemSellStatus).SELL}" class="text-right">
+      <div th:if="${item.itemSellStatus eq T(com.shop.jsshop.constant.ItemSellStatus).SELL}" class="text-right">
         <button type="button" class="btn btn-light border border-primary btn-lg" onclick="addCart()">장바구니 담기</button>
         <button type="button" class="btn btn-primary btn-lg" onclick="order()">주문하기</button>
       </div>
-      <div th:unless="${item.itemSellStatus == T(com.shop.jsshop.constant.ItemSellStatus).SELL}" class="text-right">
+      <div th:unless="${item.itemSellStatus eq T(com.shop.jsshop.constant.ItemSellStatus).SELL}" class="text-right">
         <button type="button" class="btn btn-danger btn-lg">품절</button>
       </div>
     </div>

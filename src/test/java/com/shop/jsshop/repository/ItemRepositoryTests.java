@@ -37,10 +37,10 @@ public class ItemRepositoryTests {
 
     }
 
-    @Test //테이블 초기화
+   /* @Test //테이블 초기화
     public void truncateTable(){
         itemRepository.deleteAll();
-    }
+    }*/
 
 
     //상품명-> 리스트 조회

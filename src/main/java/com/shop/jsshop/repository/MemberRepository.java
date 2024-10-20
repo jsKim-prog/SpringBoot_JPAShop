@@ -7,6 +7,6 @@ import java.util.Optional;
 
 public interface MemberRepository extends JpaRepository<Member, Long> {
     //중복확인-이메일 검사
-    Optional<Member> findByEmail(String email); //NullPointerException 방지 위해 Optional 사용
+    Member findByEmail(String email); //NullPointerException 방지 위해 Optional 사용
 
 }

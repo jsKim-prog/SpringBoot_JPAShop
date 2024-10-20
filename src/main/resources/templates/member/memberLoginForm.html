@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout01}">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" layout:decorate="~{layouts/layout1}">
+<!--사용자 css 추가-->
+<th:block layout:fragment="css">
+    <style>
+        .error{
+            color: indianred;
+        }
+    </style>
+</th:block>
 <div layout:fragment="content">
-    <!--사용자 css 추가-->
-    <th:block layout:fragment="css">
-        <style>
-            .error{
-                color: indianred;
-            }
-        </style>
-    </th:block>
     <!--content 영역-->
     <form role="form" method="post" action="/members/login">
         <div class="form-group">

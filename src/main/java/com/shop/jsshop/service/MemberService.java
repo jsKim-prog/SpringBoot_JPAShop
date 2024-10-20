@@ -26,8 +26,8 @@ public class MemberService implements UserDetailsService {
 
     //이메일 중복확인
     private void validateDuplicateMember(Member member){
-        Optional<Member> checkMem = memberRepo.findByEmail(member.getEmail());
-        if(checkMem.isPresent()){ //중복 이메일이 있다면
+        Member checkMem = memberRepo.findByEmail(member.getEmail());
+        if(checkMem!=null){ //중복 이메일이 있다면
             throw new IllegalStateException("이미 가입된 회원입니다.");
         }
 
@@ -35,11 +35,11 @@ public class MemberService implements UserDetailsService {
 
     @Override //UserDetailsService구현, 로그인/로그아웃
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        Optional<Member> member = memberRepo.findByEmail(email);
-        if(member.isEmpty()){
+        Member member = memberRepo.findByEmail(email);
+        if(member==null){
             throw new UsernameNotFoundException(email);
         }
-        Member loginMember = member.get();
+        Member loginMember = member;
         return User.builder().username(loginMember.getEmail()).password(loginMember.getPassword()).roles(loginMember.getRole().toString())
                 .build();
     }

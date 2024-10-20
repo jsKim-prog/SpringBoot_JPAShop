@@ -1,7 +1,8 @@
 package com.shop.jsshop.config;
 
-//import com.shop.jsshop.service.MemberService;
-//import org.springframework.beans.factory.annotation.Autowired;
+
+import com.shop.jsshop.service.MemberService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -15,8 +16,8 @@ import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 @EnableWebSecurity //springSecurityFilterChain 자동포함하기 위함
 public class SecurityConfig  { //Spring Security - 요청별 인증관리
 
-   // @Autowired
-   // MemberService memberService;
+    @Autowired
+    MemberService memberService;
 
     @Bean
     public PasswordEncoder passwordEncoder(){ //비밀번호 암호화 저장
@@ -42,8 +43,7 @@ public class SecurityConfig  { //Spring Security - 요청별 인증관리
                         .logoutSuccessUrl("/")
 
                 )
-                .build()
-                ;
+                .build();
     }
 
 }
