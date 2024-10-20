@@ -106,10 +106,11 @@ public class CartService {
         List<OrderDTO> orderDTOList = new ArrayList<>(); //orderservice 이용 위한 준비
         for (CartOrderDTO cartOrderDTO:cartOrderDTOList){
             //cartorder(dto) -> order(dto)
+            log.info("Service.orderCartItem/CartItemId : "+ cartOrderDTO.getCartItemId());
             CartItem cartItem = cartItemRepository.findById(cartOrderDTO.getCartItemId()).orElseThrow(EntityNotFoundException::new);
 
             OrderDTO orderDTO = new OrderDTO();
-            orderDTO.setItemId(cartItem.getId());
+            orderDTO.setItemId(cartItem.getItem().getId()); //**10/20 수정!
             orderDTO.setCount(cartItem.getCount());
             orderDTOList.add(orderDTO);
         }

@@ -10,6 +10,7 @@ import com.shop.jsshop.repository.MemberRepository;
 import com.shop.jsshop.repository.OrderRepository;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
@@ -24,6 +25,7 @@ import java.util.Optional;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Log4j2
 public class OrderService {
     private final ItemRepository itemRepository;
     private final MemberRepository memberRepository;
@@ -91,6 +93,7 @@ public class OrderService {
         Member member = memberRepository.findByEmail(email);
         List<OrderItem> orderItemList = new ArrayList<>();
         for (OrderDTO orderDTO:orderDTOList){
+            log.info("OrderService.orders/itemID : "+orderDTO.getItemId()); //OrderService.orders/itemID : 4 ->cartItemId??
             Item item = itemRepository.findById(orderDTO.getItemId()).orElseThrow(EntityNotFoundException::new);
 
             OrderItem orderItem = OrderItem.createOderItem(item, orderDTO.getCount());

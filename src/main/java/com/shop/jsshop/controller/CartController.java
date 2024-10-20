@@ -6,6 +6,7 @@ import com.shop.jsshop.dto.CartOrderDTO;
 import com.shop.jsshop.service.CartService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.log4j.Log4j2;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,6 +20,7 @@ import java.util.List;
 
 @Controller
 @RequiredArgsConstructor
+@Log4j2
 public class CartController {
     private final CartService cartService;
 
@@ -76,7 +78,9 @@ public class CartController {
     //장바구니 상품 주문(수량 업데이트)(p.363)
     @PostMapping(value = "/cart/orders")
     public @ResponseBody ResponseEntity oderCartItem(@RequestBody CartOrderDTO cartOrderDTO, Principal principal){
+        log.info("/cart/orders controller 실행+++++++++++++++++");
         List<CartOrderDTO> cartOrderDTOList = cartOrderDTO.getCartOrderDTOList();
+        log.info("받은 리스트 : "+cartOrderDTOList+"/"+cartOrderDTOList.get(0).getCartItemId());
 
         if(cartOrderDTOList ==null|| cartOrderDTOList.size()==0){
             return new ResponseEntity<String>("주문할 상품을 선택해 주세요.", HttpStatus.FORBIDDEN);
